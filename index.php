@@ -1,15 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Font Awesome Getter</title>
-</head>
+$type  = $_REQUEST['type']  ?? $_REQUEST['t'] ?? false;
+$icon  = $_REQUEST['icon']  ?? $_REQUEST['i'] ?? false;
+$color = $_REQUEST['color'] ?? $_REQUEST['c'] ?? false;
 
-<body>
-	Font Awesome Getter
-</body>
+if ($type && $icon) {
 
-</html>
+	$path = __DIR__ . "/svgs/$type/$icon.svg";
+
+	if (!file_exists($path)) {
+		echo json_encode([
+			'path' => $path,
+			'error' => 'The icon you requested does not exist!',
+			'success' => false
+		]);
+		exit;
+	}
+
+	$svg = file_get_contents($path);
+	$style = '';
+
+	if ($color) {
+		$id = '_' . uniqid();
+		$svg = str_replace('<svg ', "<svg id=\"$id\" ", $svg);
+
+		$style = "<style>#$id * {fill:$color;}</style>";
+	}
+
+	echo $style . $svg;
+} else {
+	echo json_encode([
+		'error' => 'To use this you must add what FontAwesome `type` (e.g. brands, light, solid) and `icon` (e.g. alien, hands, shapes) you want!',
+		'success' => false
+	]);
+}
