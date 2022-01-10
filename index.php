@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 
 $file = './metadata/aliases.json';
 if (!file_exists($file)) {
