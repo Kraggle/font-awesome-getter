@@ -1,1 +1,1 @@
-const mix=require("laravel-mix");mix.disableSuccessNotifications().sourceMaps(!0,"source-map").webpackConfig({devtool:"source-map"}).browserSync({watch:!0,proxy:"http://font-awesome-getter.test",files:["*.js","*.css","*.php"],reloadDelay:1e3});
+const mix=require("laravel-mix");mix.disableSuccessNotifications().sourceMaps(!0,"source-map").webpackConfig({devtool:"source-map"}).browserSync({watch:!0,proxy:"http://font-awesome-getter.test",port:3008,files:["**/*.js","*.js","**/*.css","**/*.php","*.php"],reloadDelay:1e3});

@@ -1,5 +1,7 @@
 <?php
 
+namespace simple_html_dom;
+
 /**
  * Website: http://sourceforge.net/projects/simplehtmldom/
  * Additional projects: http://sourceforge.net/projects/debugobject/
@@ -2380,60 +2382,5 @@ class simple_html_dom {
 	}
 }
 
-header('Access-Control-Allow-Origin: *');
 
-$file = './metadata/aliases.json';
-if (!file_exists($file)) {
-	$aliases = (object) [];
-	$icons = file_get_json('./metadata/icons.json');
-	foreach ($icons as $name => $value) {
-		if (isset($value->aliases->names)) {
-			foreach ($value->aliases->names as $alias)
-				$aliases->$alias = $name;
-		}
-	}
-
-	file_put_contents($file, json_encode($aliases, JSON_PRETTY_PRINT));
-}
-
-$type  = $_REQUEST['type']  ?? $_REQUEST['t'] ?? 'regular';
-$icon  = $_REQUEST['icon']  ?? $_REQUEST['i'] ?? 'i-do-not-exist';
-$color = $_REQUEST['color'] ?? $_REQUEST['c'] ?? false;
-$class = $_REQUEST['class'] ?? $_REQUEST['cls'] ?? '';
-
-if (!file_exists(__DIR__ . "/svgs/$type/")) {
-	echo json_encode([
-		'type' => $type,
-		'error' => "That icon type does not exist. The options are 'brands', 'duotone', 'light', 'regular', 'solid' and 'thin'",
-		'success' => false
-	]);
-	exit;
-}
-
-$aliases = file_get_json($file);
-if (isset($aliases->$icon)) $icon = $aliases->$icon;
-$path = __DIR__ . "/svgs/$type/$icon.svg";
-
-if (!file_exists($path)) {
-	echo json_encode([
-		'error' => "The icon you requested does not exist!",
-		'success' => false
-	]);
-	exit;
-}
-
-$svg = file_get_html($path)->find('svg', 0);
-$id = 'fa_' . uniqid();
-$svg->id = $id;
-$svg->class = 'fa-icon' . ($class ? " $class" : '');
-$style = '';
-
-if ($color) {
-	$style = "<style>#$id * {fill:$color;}</style>";
-}
-
-echo $style . $svg;
-
-function file_get_json($path, $associative = false) {
-	return json_decode(file_get_contents($path), $associative);
-}
+echo json_encode(['2386', function_exists('file_get_html')]);
