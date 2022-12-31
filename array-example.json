@@ -1,0 +1,35 @@
+[
+	{
+		"icon": "heart",
+		"type": "solid",
+		"class": "heart",
+		"color": "#fff",
+		"id": "heart"
+	},
+	{
+		"icon": "heart",
+		"type": "regular",
+		"id": ""
+	},
+	{
+		"icon": "heat",
+		"type": "light",
+		"id": "hot"
+	},
+	{
+		"i": "circle",
+		"t": "duotone",
+		"cls": "circle",
+		"c": "#fff",
+		"id": "circle"
+	},
+	{
+		"i": "square",
+		"t": "thin",
+		"id": "square"
+	},
+	{
+		"icon": "triangle",
+		"id": "blob"
+	}
+]
